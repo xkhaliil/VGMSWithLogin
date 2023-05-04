@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a new game</title>
+</head>
+<body>
+<div th:replace="template"></div>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header" th:if="${mode=='update'}">Edit Game</div>
+            <div class="card-body">
+                <h1 class="card-title">Update Game</h1>
+                <form action="updateGame">
+                    <div class="form-group">
+                        <label class="control-genre">ID</label>
+                        <input type="text" name="GameId" readonly th:value="${game.GameId}" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-genre">Name</label>
+                        <input type="text" name="GameName" th:value="${game.gameName}" class="form-control" />
+                        <p th:errors=*{game.GameName} class="text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-genre">Publisher</label>
+                        <input type="text" name="GamePublisher" class="form-control" th:value="${game.gamePublisher}" />
+                        <span th:errors="*{game.GamePublisher}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-genre">Price</label>
+                        <input type="text" name="GamePrice" th:value="${game.gamePrice}" class="form-control" />
+                        <p th:errors=*{game.GamePrice} class="text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-genre">Rating</label>
+                        <input type="text" name="GameRating" th:value="${game.GameRating}" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-genre">Publish Date</label>
+                        <input type="date" name="GameReleaseDate" th:value="${#dates.format(game.gameReleaseDate, 'MM-dd-yyyy')}" class="form-control" />
+                        <p th:errors=*{game.GameReleaseDate} class="text-danger"></p>
+                    </div>
+                    <div class="form-group flex flex-row">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <a th:href="@{gamesList}" class="btn btn-dark">Back to list</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

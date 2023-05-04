@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Games List</title>
+</head>
+<body>
+<div th:replace="template"></div>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h3>Games List</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Publisher</th>
+                    <th>Rating</th>
+                    <th>Price</th>
+                    <th>Genre</th>
+                    <th>Publish Date</th>
+                    <th colspan="2" sec:authorize="hasRole('ADMIN')">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="game : ${games.content}">
+                    <td th:text="${game.GameId}"></td>
+                    <td th:text="${game.GameName}"></td>
+                    <td th:text="${game.GamePublisher}"></td>
+                    <td th:text="${game.GameRating}"></td>
+                    <td th:text="${game.GamePrice}"></td>
+                    <td   th:if= "${!#strings.isEmpty(game.genre)}"   th:text="${game.genre.genreName}"></td>
+                    <td   th:if= "${#strings.isEmpty(game.genre)}"     th:text="${'No genre'}"></td>
+                    <td th:text="${#dates.format(game.GameReleaseDate, 'dd-MM-yyyy')}"></td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{deleteGame(gameId=${game.GameId}, page=${currentPage}, size=${size})}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                        <a th:href="@{showUpdate(gameId=${game.GameId}, page=${currentPage}, size=${size})}" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page,status: ${pages}" class="nav-item">
+                    <a th:class="${status.index == currentPage ? 'btn btn-primary' : 'btn btn-outline-primary'}"
+                       th:href="@{gamesList(page=${status.index}, size=${size})}"
+                       th:text="${status.index + 1}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
