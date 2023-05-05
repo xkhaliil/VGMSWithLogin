@@ -43,10 +43,18 @@ public class GameController {
     public String saveGame(@Valid Game game,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes,
+    ModelMap    modelMap,
     @ModelAttribute("page") int pageFromPrevious,
     @RequestParam(name = "size", defaultValue = "2") int size) {
         int page;
-        if (bindingResult.hasErrors()) return "formGame";
+        if (bindingResult.hasErrors())
+        {
+            List<Genre> genres = genreService.getAllGenres();
+            modelMap.addAttribute("genres", genres);
+            modelMap.addAttribute("mode", "update");
+            return "formGame";
+        }
+
         if (game.getGameId() == null) {
             page = gameService.getAllGames().size() / size;
         } else {

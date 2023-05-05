@@ -1,7 +1,9 @@
 package com.khalil.vgms.services;
 
 import com.khalil.vgms.entities.Game;
+import com.khalil.vgms.entities.Genre;
 import com.khalil.vgms.repos.GameRepository;
+import com.khalil.vgms.repos.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,8 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
     @Autowired
     private GameRepository gameRepository;
+    @Autowired
+    private GenreRepository genreRepository;
     @Override
     public Game saveGame(Game game) {
         return gameRepository.save(game);
@@ -46,5 +50,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public Page<Game> getAllGamesByPage(int page, int size) {
         return gameRepository.findAll(PageRequest.of(page, size));
+    }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        return genreRepository.findAll();
     }
 }

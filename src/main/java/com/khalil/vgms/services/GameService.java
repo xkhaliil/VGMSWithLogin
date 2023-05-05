@@ -1,6 +1,7 @@
 package com.khalil.vgms.services;
 
 import com.khalil.vgms.entities.Game;
+import com.khalil.vgms.entities.Genre;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface GameService {
     Game getGame(Long id);
     List<Game> getAllGames();
     Page<Game> getAllGamesByPage(int page, int size);
+
+    List<Genre> getAllGenres();
 }
