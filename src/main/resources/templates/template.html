@@ -34,7 +34,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" th:href="@{gamesList}">Games List</a>
-                        <a sec:authorize="hasAnyRole('ADMIN', 'AGENT')" class="dropdown-item" th:href="@{showCreate}">Add
+                        <a class="dropdown-item" th:href="@{showCreate}" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">Add
                             Game</a>
                     </div>
                 </li>
@@ -43,8 +43,8 @@
                         [<span sec:authentication="name"></span>]
                     </a>
                     <div class="dropdown-menu">
-                        <a sec:authorize="!isAuthenticated()" class="dropdown-item" href="#">Login</a>
-                        <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/logout}">Logout</a>
+                        <a th:if="${!#authentication.isAuthenticated()}" class="dropdown-item" href="#">Login</a>
+                        <a th:if="${#authentication.isAuthenticated()}" class="dropdown-item" th:href="@{/logout}">Logout</a>
                         <a class="dropdown-item" href="#">Profile</a>
                     </div>
                 </li>
