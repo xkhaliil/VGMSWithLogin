@@ -41,11 +41,11 @@ public class GameController {
 
     @RequestMapping("/saveGame")
     public String saveGame(@Valid Game game,
-                            BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes,
-    ModelMap    modelMap,
-    @ModelAttribute("page") int pageFromPrevious,
-    @RequestParam(name = "size", defaultValue = "2") int size) {
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes,
+                           ModelMap    modelMap,
+                           @ModelAttribute("page") int pageFromPrevious,
+                           @RequestParam(name = "size", defaultValue = "2") int size) {
         int page;
         if (bindingResult.hasErrors())
         {
@@ -64,7 +64,6 @@ public class GameController {
         redirectAttributes.addAttribute("page", page);
         return "redirect:/gamesList";
     }
-
     @RequestMapping("/gamesList")
     public String gamesList(
             ModelMap modelMap,
